@@ -1,0 +1,4 @@
+node_modules/
+проект/node_modules
+проект-фиолет/node_modules
+.DS_Store

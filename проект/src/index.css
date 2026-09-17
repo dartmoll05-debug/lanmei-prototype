@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Токены по #17 «Перевозка грузов из Китая», роли те же, цвет — Lanmei.
+      Холст бренда — плоский, без градиента, целыми секциями (в #17 красный = 19,5 % пикселей).
+      Пипетка с логотипа 17.09.2026: синий #2d65fd, край гаммы #7b20b9 (не используется фоном). ── */
+:root {
+  --blue: #2d65fd;
+  --blue-deep: #1f4fd6;
+  --blue-soft: #dbe5ff;
+  --char: #35332f;          /* тёплый графит #17, не чёрный */
+  --char-2: #2b2a27;
+  --paper: #f5f5f3;
+  --ink: #1f1e1b;
+  --ink-2: #6b6a66;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--char); color: var(--ink);
+  font-family: 'Golos Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+
+/* Страница лежит в тёмной рамке со скруглением — как весь макет #17. */
+.page { margin: 14px; border-radius: 34px; overflow: hidden; background: var(--paper); }
+
+/* Дисплей: lowercase-гигант #17. Вес средний, не жирный — у эталона мягкая геометрия. */
+.display { font-family: 'Unbounded', 'Golos Text', sans-serif; font-weight: 500; letter-spacing: -0.035em; line-height: 0.96; }
+.display-b { font-weight: 700; }
+
+/* Три регистра #17: цвет бренда «мы зовём», светлый «мы показываем», графит «мы говорим». */
+.reg-blue  { background: var(--blue);  color: #fff; }
+.reg-paper { background: var(--paper); color: var(--ink); }
+.reg-char  { background: var(--char);  color: #fff; }
+.reg-blue .muted  { color: rgba(255,255,255,.82); }
+.reg-char .muted  { color: rgba(255,255,255,.66); }
+.reg-paper .muted { color: var(--ink-2); }
+
+/* Секция-плита: в #17 цветные секции — скруглённые плиты с отступом от рамки. */
+.slab { border-radius: 30px; margin: 0 26px; }
+
+/* Карточки #17: плоские, радиус 26, без лотков. Предмет внутри — 45–60 % площади. */
+.card { border-radius: 26px; position: relative; overflow: hidden; }
+.card-char  { background: var(--char-2); color: #fff; }
+.card-paper { background: #fff; color: var(--ink); }
+.card-blue  { background: var(--blue); color: #fff; }
+.num { font-size: 11px; letter-spacing: .12em; opacity: .55; }
+
+/* Предметы: цельные, крупные, пробивают границу карточки на 10–25 %. */
+.obj { position: absolute; pointer-events: none; filter: drop-shadow(0 30px 34px rgba(0,0,0,.28)); }
+.obj-paper { filter: drop-shadow(0 22px 30px rgba(0,0,0,.26)); }
+.scene { position: relative; }
+.scene img { position: absolute; filter: drop-shadow(0 40px 40px rgba(0,0,0,.30)); }
+
+/* Кнопки #17: прямоугольник со скруглением 14, графит на синем, синий на светлом. */
+.btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 14px; padding: 16px 26px;
+  font-weight: 600; font-size: 15.5px; text-decoration: none; border: 0; cursor: pointer;
+  transition: transform .5s var(--ease), background .5s var(--ease); }
+.btn:active { transform: scale(.98); }
+.btn-char { background: var(--char); color: #fff; }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: var(--blue-deep); }
+.btn-paper { background: #fff; color: var(--ink); }
+
+/* Круглая контурная кнопка из героя #17. */
+.ring-cta { width: 190px; height: 190px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.55);
+  display: flex; align-items: center; justify-content: center; text-align: center; color: #fff;
+  font-weight: 600; font-size: 16px; line-height: 1.3; text-decoration: none;
+  transition: background .6s var(--ease), transform .6s var(--ease); }
+.ring-cta:hover { background: rgba(255,255,255,.12); transform: scale(1.03); }
+.reg-paper .ring-cta, .reg-char .ring-cta { border-color: currentColor; color: inherit; }
+
+/* Пилюли срок / цена — как в карточках услуг #17. */
+.pill { display: inline-flex; align-items: center; border-radius: 12px; padding: 7px 12px; font-size: 13.5px; font-weight: 600;
+  background: rgba(255,255,255,.10); }
+.card-paper .pill, .reg-paper .pill { background: rgba(31,30,27,.06); }
+
+/* Левая рейка #17: логотип, «меню», мессенджеры. */
+.rail { position: fixed; left: 26px; top: 50%; transform: translateY(-50%); z-index: 50; width: 66px; padding: 14px 0;
+  border-radius: 22px; background: rgba(255,255,255,.92); box-shadow: 0 20px 50px -20px rgba(0,0,0,.35);
+  display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.rail .soc { width: 40px; height: 40px; border-radius: 12px; background: var(--blue-soft); display: flex; align-items: center; justify-content: center; }
+.rail .menu { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; letter-spacing: .12em; color: var(--ink-2); font-weight: 600; }
+
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Квиз — белая форма на синем, как форма расчёта #17. */
+.q-opt { text-align: left; border-radius: 14px; padding: 15px 18px; font-size: 16px; background: #fff; color: var(--ink);
+  border: 1px solid rgba(31,30,27,.08); transition: border-color .4s var(--ease), transform .4s var(--ease); }
+.q-opt:hover { border-color: var(--blue); }
+.q-opt:active { transform: scale(.99); }
+
+@media (max-width: 900px) {
+  .rail, .desk-only { display: none !important; }
+  .page { margin: 6px; border-radius: 22px; }
+  .slab { margin: 0 8px; border-radius: 20px; }
+  .display { letter-spacing: -0.025em; }
+}
+@media (max-width: 640px) {
+  h1.display { font-size: 30px !important; overflow-wrap: anywhere; }
+  h2.display { font-size: 26px !important; overflow-wrap: anywhere; }
+  body { font-size: 16px; }
+}
+
+/* Телефон: сцена героя одним кадром во всю ширину. */
+@media (max-width: 900px) {
+  .hero-scene { height: auto !important; margin-bottom: -40px !important; }
+  .hero-scene img { position: relative !important; display: block; width: 100% !important; left: 0 !important; }
+}
+
+@media (max-width: 900px) { .after-scene { padding-top: 80px !important; } }
+
+/* Текст карточки всегда над предметом: у предмета свой слой 0, у заголовка и абзаца — 2. */
+.card .obj { z-index: 0; }
+.card h3, .card p, .card .pill, .card .btn { position: relative; z-index: 2; }
+
+/* Бургер: три линии складываются в крест. */
+.burger { width: 40px; height: 40px; border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+.burger i { display: block; width: 18px; height: 1.6px; background: var(--ink); border-radius: 2px; transition: transform .5s var(--ease), opacity .4s var(--ease); }
+.burger.is-open i:nth-child(1) { transform: translateY(6.6px) rotate(45deg); }
+.burger.is-open i:nth-child(2) { opacity: 0; }
+.burger.is-open i:nth-child(3) { transform: translateY(-6.6px) rotate(-45deg); }
+.rail .soc { color: var(--blue); }
+/* Меню на весь экран: тяжёлое стекло, ссылки всплывают со сдвигом. */
+.menu-overlay { position: fixed; inset: 0; z-index: 40; background: rgba(43,42,39,.86); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: #fff;
+  opacity: 0; pointer-events: none; transition: opacity .6s var(--ease); }
+.menu-overlay.is-open { opacity: 1; pointer-events: auto; }
+.menu-link { color: #fff; text-decoration: none; opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease), color .4s; padding: 6px 0; }
+.menu-overlay.is-open .menu-link { opacity: 1; transform: none; }
+.menu-link:hover { color: var(--blue-soft); }
+
+/* Телефон: карточка перерабатывается, а не сжимается — предмет над текстом, без пустоты. */
+@media (max-width: 900px) {
+  .card { min-height: 0 !important; }
+  .card .obj { position: static !important; display: block; width: 52% !important; max-height: 200px; object-fit: contain; margin: 8px 0 14px auto; order: -1; transform: none !important; }
+  .card.flex { flex-direction: column; justify-content: flex-start; }
+  .card .num { position: static !important; display: block; margin-bottom: 8px; }
+  .rail { display: flex !important; left: auto; right: 10px; top: 10px; transform: none; flex-direction: row; width: auto; padding: 6px 8px; gap: 8px; border-radius: 16px; }
+  .rail .menu, .rail .soc { display: none; }
+}
+/* Телефон: рейка уходит в правый нижний угол, под большой палец, и не перекрывает шапку. */
+@media (max-width: 900px) {
+  .rail { top: auto !important; bottom: 14px !important; right: 12px !important; }
+}
+
+/* Документ клиента как бумага: белое поле, тонкая кромка, мягкая тень, скан ровно. */
+.paper { margin: 0; background: #fff; padding: 6px; border-radius: 6px; border: 1px solid rgba(31,30,27,.08);
+  box-shadow: 0 24px 40px -18px rgba(0,0,0,.35), 0 2px 6px rgba(0,0,0,.06); }
+.paper img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.paper figcaption { font-size: 11px; line-height: 1.3; color: var(--ink-2); padding: 6px 4px 2px; letter-spacing: .01em; }
+.doc-in-card { position: absolute; z-index: 1; }
+@media (max-width: 900px) { .paper { width: 70% !important; margin: 8px 0 14px auto; position: static !important; } }
+
+/* Вопросы: раскрытие с плавной высотой, плюс складывается в минус. */
+.faq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease); }
+.faq-body > div { overflow: hidden; min-height: 0; }
+.faq-item.is-open .faq-body { grid-template-rows: 1fr; }
+.faq-plus { position: relative; width: 22px; height: 22px; flex: 0 0 22px; }
+.faq-plus::before, .faq-plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 14px; height: 1.6px; background: var(--ink); transform: translate(-50%,-50%); transition: transform .5s var(--ease); }
+.faq-plus::after { transform: translate(-50%,-50%) rotate(90deg); }
+.faq-item.is-open .faq-plus::after { transform: translate(-50%,-50%) rotate(0deg); }
+
+/* Плавающая кнопка: как на живом lanmei.ru, сопровождает прокрутку, прячется в герое и на квизе. */
+.float-cta { position: fixed; right: 26px; bottom: 26px; z-index: 45; display: inline-flex; align-items: center; gap: 8px;
+  opacity: 0; transform: translateY(16px); pointer-events: none;
+  transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.float-cta.is-on { opacity: 1; transform: none; pointer-events: auto; animation: cta-pulse 2.4s var(--ease) infinite; }
+@media (max-width: 900px) { .float-cta { right: 12px; bottom: 70px; padding: 12px 16px; font-size: 14px; } }
+
+/* Мобильный герой: кнопка под сценой видна, кружок — только на десктопе. */
+@media (max-width: 900px) { .mob-only { display: inline-flex !important; position: relative; z-index: 3; } }
+@media (min-width: 901px) { .mob-only { display: none !important; } }
+
+/* ── CTA-система. Одна главная кнопка на экран: крупная пилюля, круг со стрелкой, подпись выгоды.
+      Синяя на светлом и графите, белая на синем холсте. Пульс тени, стрелка уходит по диагонали при наведении. ── */
+.cta-wrap { display: flex; flex-direction: column; gap: 10px; }
+.cta-main { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; padding: 12px 12px 12px 30px;
+  background: var(--blue); color: #fff; font-weight: 700; font-size: 18px; letter-spacing: -.01em; text-decoration: none; border: 0; cursor: pointer;
+  box-shadow: 0 18px 40px -12px rgba(45,101,253,.65), inset 0 1px 0 rgba(255,255,255,.25);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease), filter .5s var(--ease); }
+.cta-main .cta-arr { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,.18); display: inline-flex; align-items: center; justify-content: center; flex: 0 0 44px;
+  transition: transform .5s var(--ease), background .5s var(--ease); }
+.cta-main:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 26px 50px -14px rgba(45,101,253,.75), inset 0 1px 0 rgba(255,255,255,.25); }
+.cta-main:hover .cta-arr { transform: translate(3px,-3px); background: rgba(255,255,255,.3); }
+.cta-main:active { transform: scale(.98); }
+.cta-light { background: #fff; color: var(--ink); box-shadow: 0 22px 44px -14px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.6); }
+.cta-light .cta-arr { background: var(--blue); color: #fff; }
+.cta-light:hover { box-shadow: 0 30px 56px -16px rgba(0,0,0,.5); }
+.cta-sm { font-size: 15.5px; padding: 9px 9px 9px 22px; gap: 10px; }
+.cta-sm .cta-arr { width: 36px; height: 36px; flex-basis: 36px; }
+.cta-sub { font-size: 13.5px; opacity: .8; }
+.cta-wrap.items-center { align-items: center; text-align: center; }
+/* Пульс: только у главной кнопки в герое и у плавающей, не у всех разом. */
+.reg-blue .cta-wrap .cta-main { animation: cta-pulse-light 2.6s var(--ease) infinite; }
+@keyframes cta-pulse { 0%,100% { box-shadow: 0 18px 40px -12px rgba(45,101,253,.65); } 50% { box-shadow: 0 18px 40px -12px rgba(45,101,253,.65), 0 0 0 10px rgba(45,101,253,.18); } }
+@keyframes cta-pulse-light { 0%,100% { box-shadow: 0 22px 44px -14px rgba(0,0,0,.45); } 50% { box-shadow: 0 22px 44px -14px rgba(0,0,0,.45), 0 0 0 12px rgba(255,255,255,.16); } }
+@media (max-width: 900px) { .cta-main { font-size: 16.5px; padding: 11px 11px 11px 24px; } .cta-wrap { width: 100%; } .cta-wrap .cta-main { justify-content: space-between; width: 100%; } }
