@@ -18,6 +18,7 @@ const nb = (s: string) => s
   .replace(/(\d) (?=[а-яА-Яa-zA-Z$₽%])/g, '$1 ')
   .replace(/(\$) (\d)/g, '$1 $2')
   .replace(/ —/g, ' —')
+  .replace(/(\d)–(\d)/g, '$1﻿–﻿$2')
 const T = ({ children }: { children: string }) => <>{nb(children)}</>
 
 function useReveal() {
